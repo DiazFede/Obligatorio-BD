@@ -1,0 +1,45 @@
+/* Modal styles */
+
+/* Overlay del modal que cubre toda la pantalla y oscurece el fondo */
+.modalOverlay {
+    position: fixed; /* Fija el overlay para que siempre esté visible */
+    top: 0; /* Posiciona el overlay en la parte superior */
+    left: 0; /* Posiciona el overlay en la parte izquierda */
+    width: 100%; /* Hace que el overlay cubra todo el ancho de la pantalla */
+    height: 100%; /* Hace que el overlay cubra toda la altura de la pantalla */
+    background-color: rgba(0, 0, 0, 0.7); /* Color oscuro semi-transparente para el fondo */
+    display: flex; /* Utiliza flexbox para centrar el contenido */
+    justify-content: center; /* Centra el modal horizontalmente */
+    align-items: center; /* Centra el modal verticalmente */
+    z-index: 999; /* Asegura que el overlay esté por encima de otros elementos */
+  }
+  
+  /* Contenedor principal del contenido del modal */
+  .modalContent {
+    background-color: #333; /* Color de fondo oscuro */
+    border-radius: 10px; /* Bordes redondeados del modal */
+    padding: 20px; /* Espaciado interno del contenido del modal */
+    width: 400px; /* Ancho fijo del modal */
+    max-width: 80%; /* Asegura que el modal no sobrepase el 80% del ancho de la pantalla */
+    box-shadow: 0 5px 15px #212121; /* Sombra alrededor del modal para darle profundidad */
+    position: relative; /* Permite posicionar elementos hijos (como el botón de cerrar) */
+    text-align: center; /* Centra el texto dentro del modal */
+    color: whitesmoke; /* Color de texto claro */
+  }
+  
+  /* Botón de cerrar en la esquina superior derecha */
+  .modalCloseButton {
+    position: absolute; /* Posiciona el botón relativo al contenedor del modal */
+    top: 10px; /* Distancia desde la parte superior del modal */
+    right: 15px; /* Distancia desde el lado derecho del modal */
+    background: none; /* Sin fondo */
+    border: none; /* Sin bordes */
+    font-size: 1.5em; /* Tamaño del texto del botón */
+    cursor: pointer; /* Cambia el cursor a mano para indicar interactividad */
+    color: #999; /* Color gris para el botón */
+  }
+  
+  /* Efecto hover para el botón de cerrar */
+  .modalCloseButton:hover {
+    color: #828282; /* Cambia el color a un gris más claro al pasar el mouse */
+  }

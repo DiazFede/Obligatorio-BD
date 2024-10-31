@@ -1,0 +1,14 @@
+/* Button styles */
+
+.button {
+    background-color: lightblue; /* Color de fondo */
+    font-size: 17px; /* Tamaño de fuente */
+    color: #333; /* Color de fuente */ 
+    transition: transform 0.2s; /* Hace mas suave la transición */
+    margin: 10px; /* Margen del botón */
+}
+
+.button:hover {
+    background-color: rgb(110, 137, 145); /* Color mas oscuro */
+    transform: scale(1.05); /* Cambia el tamaño al pasar el mouse */
+}
