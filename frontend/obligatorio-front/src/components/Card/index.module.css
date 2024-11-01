@@ -1,23 +1,32 @@
-/* Card styles */
-
 .Card {
-    background-color: rgba(211, 211, 211, 0.427); /* Color gris semi-transparente */
-    font-size: 25px; /* Tamaño de fuente */
-    color: whitesmoke; /* Color de fuente */
-    transition: transform 0.2s; /* Hace mas suave la transición */
-    border-radius: 2%; /* Redondea los bordes */
-    border: 2px solid; /* Agrega un color de borde */
-    border-color: rgba(166, 166, 166); /* Color de borde */
-    margin: 0.3cm; /* Separación del resto de los elementos */
-    height: auto; /* Altura automática */
-    width: auto; /* Ancho */
-    gap: 10px; /* Da espacio a los elementos */
+    background-color: rgba(0, 0, 0, 0.4);
+    font-size: 25px;
+    color: whitesmoke;
+    transition: transform 0.35s;
+    border-radius: 2%;
+    border: 2px solid;
+    margin: 0.3cm;
+    height: auto;
+    width: auto;
+    gap: 10px;
     display: flex;
-    flex-direction: column; /* Organiza los elementos por columnas */
+    flex-direction: column;
+    border-color: rgba(0, 0, 0, 0.4);
 }
 
 .Card:hover {
-    transform: scale(1.05); /* Cambia el tamaño al pasar el mouse */ 
-    background-color: rgba(166, 166, 166, 0.427); /* Color mas oscuro */
-    border-color: rgb(131, 131, 131); /* Color de borde mas oscuro */
+    transform: scale(1.05); 
+    background-color: rgba(0, 0, 0, 0.47);
+    border-color: rgba(0, 0, 0, 0.47);
+}
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.content {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
 }

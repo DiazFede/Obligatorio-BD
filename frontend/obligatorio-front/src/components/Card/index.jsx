@@ -1,14 +1,13 @@
-{/* Componente que devuelve una tarjeta con el texto pasado por parámetro (children) */}
-
 import React from 'react';
-import Styles from './index.module.css'
+import Styles from './index.module.css';
 
-const Card = ({ children }) => {
+const Card = ({ title, content }) => {
     return (
-        <div className = {Styles.Card}>
-            {children}
+        <div className={Styles.Card}>
+            <h3 className={Styles.title}>{title}</h3>
+            <p className={Styles.content}>{content}</p>
         </div>
-    )
+    );
 }
 
-export default Card
+export default Card;
