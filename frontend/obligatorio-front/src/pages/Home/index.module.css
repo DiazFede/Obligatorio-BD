@@ -1,12 +1,10 @@
-/* index.module.css */
 .mainContent {
-    background-image: url('../assets/background.jpg') !important; /* Ruta de la imagen */
-    background-size: cover !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    height: 100vh; /* Asegura que cubra toda la pantalla */
-    color: whitesmoke;
+    margin-top: 60px;
+  }
+  
+  .cardContainer {
     display: flex;
-    align-items: center;
+    gap: 20px;
     justify-content: center;
-}
+    padding: 20px;
+  }

@@ -1,0 +1,43 @@
+.Card {
+    background-color: rgba(0, 0, 0, 0.4);
+    font-size: 25px;
+    color: whitesmoke;
+    transition: transform 0.35s;
+    border-radius: 2%;
+    border: 2px solid;
+    margin: 0.3cm;
+    height: auto;
+    width: auto;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    border-color: rgba(0, 0, 0, 0.4);
+}
+
+.Card:hover {
+    transform: scale(1.05); 
+    background-color: rgba(0, 0, 0, 0.47);
+    border-color: rgba(0, 0, 0, 0.47);
+}
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.content {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.Card Button {
+    margin-top: 10px;
+    align-self: center;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.Card Button:hover {
+    background-color: rgb(255, 255, 255);
+}
