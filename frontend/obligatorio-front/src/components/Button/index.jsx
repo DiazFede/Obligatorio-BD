@@ -3,9 +3,9 @@
 import React from 'react';
 import Styles from './index.module.css'
 
-const Button = ({ children , onClickHandler }) => {
+const Button = ({ children , onClick }) => {
     return (
-        <button onClick = {onClickHandler} className = {Styles.button}>{children}</button>
+        <button onClick = {onClick} className = {Styles.button}>{children}</button>
     )
 }
 

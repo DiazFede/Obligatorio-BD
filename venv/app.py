@@ -367,4 +367,3 @@ def reportar_alumnos_por_actividad():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
