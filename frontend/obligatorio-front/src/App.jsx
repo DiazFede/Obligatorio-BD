@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login'
+import Help from './pages/Help';
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} /> {/* Ruta a home */}
           <Route path="/login" element={<Login />} /> {/* Ruta a Login */}
+          <Route path="/help" element={<Help />} /> {/* Ruta a Help */}
         </Routes>
       </Router>
     </>
