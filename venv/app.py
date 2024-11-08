@@ -367,6 +367,27 @@ def alumno_by_id(ci):
         cursor.close()
         conn.close()
         return jsonify({"message": "Alumno eliminado exitosamente."})
+    
+# Obtener alumno por CI
+@app.route('/alumno/<int:ci>', methods=['GET'])
+def get_alumno_by_ci(ci):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    try:
+        cursor.execute("SELECT * FROM alumnos WHERE ci = %s", (ci,))
+        alumno = cursor.fetchone()
+
+        if alumno:
+            return jsonify(alumno)
+        else:
+            return jsonify({"message": "Alumno no encontrado"}), 404
+    except mysql.connector.Error as err:
+        return jsonify({"message": f"Error al obtener el alumno: {err}"}), 500
+    finally:
+        cursor.close()
+        conn.close()
+
 
 # CRUD para la relación alumno_clase
 @app.route('/alumno_clase', methods=['GET', 'POST'])
@@ -420,21 +441,6 @@ def alumno_clase_by_id(id_clase, ci_alumno):
         conn.close()
         return jsonify({"message": "Relación alumno-clase actualizada exitosamente."})
 
-
-@app.route('/reportes/ingresos_actividades', methods=['GET'])
-def reportar_ingresos_actividades():
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("""
-        SELECT a.descripcion, SUM(e.costo) AS ingresos
-        FROM actividades a
-        LEFT JOIN equipamiento e ON a.id = e.id_actividad
-        GROUP BY a.descripcion
-    """)
-    reportes = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return jsonify(reportes)
 
 @app.route('/reportes/alumnos_por_actividad', methods=['GET'])
 def reportar_alumnos_por_actividad():
@@ -502,21 +508,7 @@ def reportar_ingresos_actividades():
     conn.close()
     return jsonify(reportes)
 
-@app.route('/reportes/alumnos_por_actividad', methods=['GET'])
-def reportar_alumnos_por_actividad():
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("""
-        SELECT a.descripcion, COUNT(ac.ci_alumno) AS total_alumnos
-        FROM actividades a
-        JOIN clase c ON a.id = c.id_actividad
-        JOIN alumno_clase ac ON c.id = ac.id_clase
-        GROUP BY a.descripcion
-    """)
-    reportes = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return jsonify(reportes)
+
 
 @app.route('/reportes/turnos_con_mas_clases', methods=['GET'])
 def reportar_turnos_mas_clases():
