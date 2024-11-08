@@ -453,3 +453,128 @@ def reportar_alumnos_por_actividad():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+@app.route('/verify_class_availability', methods=['POST'])
+def verify_class_availability():
+    data = request.get_json()
+    id_turno = data.get('id_turno')
+    ci_instructor = data.get('ci_instructor')
+    ci_alumno = data.get('ci_alumno')
+    
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    try:
+        # Verificar que el instructor no tenga otra clase en el mismo turno
+        cursor.execute("""
+            SELECT * FROM clase 
+            WHERE ci_instructor = %s AND id_turno = %s
+        """, (ci_instructor, id_turno))
+        if cursor.fetchone():
+            return jsonify({"message": "El instructor ya tiene una clase en este turno"}), 400
+
+        # Verificar que el alumno no esté en otra clase en el mismo turno
+        cursor.execute("""
+            SELECT * FROM alumno_clase ac
+            JOIN clase c ON ac.id_clase = c.id
+            WHERE ac.ci_alumno = %s AND c.id_turno = %s
+        """, (ci_alumno, id_turno))
+        if cursor.fetchone():
+            return jsonify({"message": "El alumno ya está inscrito en otra clase en este turno"}), 400
+
+        return jsonify({"message": "Disponibilidad verificada"}), 200
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route('/reportes/ingresos_actividades', methods=['GET'])
+def reportar_ingresos_actividades():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT a.descripcion, SUM(a.costo + IFNULL(e.costo, 0)) AS ingresos
+        FROM actividades a
+        LEFT JOIN equipamiento e ON a.id = e.id_actividad
+        GROUP BY a.descripcion
+    """)
+    reportes = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return jsonify(reportes)
+
+@app.route('/reportes/alumnos_por_actividad', methods=['GET'])
+def reportar_alumnos_por_actividad():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT a.descripcion, COUNT(ac.ci_alumno) AS total_alumnos
+        FROM actividades a
+        JOIN clase c ON a.id = c.id_actividad
+        JOIN alumno_clase ac ON c.id = ac.id_clase
+        GROUP BY a.descripcion
+    """)
+    reportes = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return jsonify(reportes)
+
+@app.route('/reportes/turnos_con_mas_clases', methods=['GET'])
+def reportar_turnos_mas_clases():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT t.hora_inicio, t.hora_fin, COUNT(c.id) AS total_clases
+        FROM turnos t
+        JOIN clase c ON t.id = c.id_turno
+        WHERE c.dictada = TRUE
+        GROUP BY t.hora_inicio, t.hora_fin
+        ORDER BY total_clases DESC
+    """)
+    reportes = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return jsonify(reportes)
+
+@app.route('/alumno_clase/rent', methods=['POST'])
+def rent_equipment_to_alumno():
+    data = request.get_json()
+    id_equipamiento = data.get('idEquipamiento')
+    ci_alumno = data.get('ciAlumno')
+    id_clase = data.get('idClase')
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("""
+            INSERT INTO alumno_clase (id_clase, ci_alumno, id_equipamiento) 
+            VALUES (%s, %s, %s)
+        """, (id_clase, ci_alumno, id_equipamiento))
+        conn.commit()
+        return jsonify({"message": "Equipamiento alquilado exitosamente."}), 201
+    except mysql.connector.Error as err:
+        return jsonify({"message": f"Error al alquilar equipamiento: {err}"}), 500
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route('/alumno_clase/release', methods=['POST'])
+def release_equipment_from_alumno():
+    data = request.get_json()
+    id_equipamiento = data.get('idEquipamiento')
+    ci_alumno = data.get('ciAlumno')
+    id_clase = data.get('idClase')
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("""
+            DELETE FROM alumno_clase 
+            WHERE id_clase = %s AND ci_alumno = %s AND id_equipamiento = %s
+        """, (id_clase, ci_alumno, id_equipamiento))
+        conn.commit()
+        return jsonify({"message": "Equipamiento liberado exitosamente."}), 200
+    except mysql.connector.Error as err:
+        return jsonify({"message": f"Error al liberar equipamiento: {err}"}), 500
+    finally:
+        cursor.close()
+        conn.close()
