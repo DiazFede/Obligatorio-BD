@@ -15,10 +15,9 @@ const Login = () => {
     setError("");
 
     try {
-      // Perform login request
       const response = await loginUser(email, password);
       console.log("Login successful:", response);
-      navigate("/"); // Redirect after successful login
+      navigate("/home");
     } catch (error) {
       console.error("Login failed:", error);
       setError("Error de inicio de sesión. Por favor verifica tus credenciales.");

@@ -7,7 +7,7 @@ import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 const HeaderLogin = () => {
   return (
     <div className={styles.header}>
-      <button onClick={() => (window.location.href = `/`)} className={styles.homeButton}>
+      <button onClick={() => (window.location.href = `/home`)} className={styles.homeButton}>
         <FontAwesomeIcon icon={faHouse} style={{ color: 'white' }} />
       </button>
       <h2 className={styles.title}>UCU - Escuela de deportes de invierno</h2>

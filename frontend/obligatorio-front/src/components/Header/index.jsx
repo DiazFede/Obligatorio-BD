@@ -1,15 +1,22 @@
 import React from 'react';
 import styles from './index.module.css';
-import Button from '../Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Header = ({ openModal }) => {
   return (
     <div className={styles.header}>
-        <Button onClick={() => {
-          window.location.href = `/login`
-        }}>Iniciar sesion</Button>
+        <button onClick={() => {
+          window.location.href = `/myaccount`;
+        }} className={styles.iconButton}>
+          <FontAwesomeIcon icon={faUser} />
+        </button>
+        
         <h2 className={styles.title}>UCU - Escuela de deportes de invierno</h2>
-        <Button onClick={openModal}>Nueva clase</Button>
+        
+        <button onClick={openModal} className={styles.iconButton}>
+          <FontAwesomeIcon icon={faPlus} />
+        </button>
     </div>
   );
 };
