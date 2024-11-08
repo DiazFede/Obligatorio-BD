@@ -1,0 +1,22 @@
+.accountContainer {
+    padding: 20px;
+    text-align: center;
+    color: white;
+  }
+  
+  .accountDetails {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-top: 20px;
+  }
+  
+  .accountDetails p {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  
+  .accountDetails strong {
+    font-weight: bold;
+  }  
