@@ -1,9 +1,9 @@
+from datetime import datetime
 from flask import Flask, jsonify, request
 import mysql.connector
 from config import Config
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import timedelta
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -21,11 +21,25 @@ def get_db_connection():
 @app.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
+    ci = data.get('ci')
+    nombre = data.get('nombre')
+    apellido = data.get('apellido')
+    fecha_nacimiento_str = data.get('fecha_nacimiento')  # String date as sent in the request
+    telefono = data.get('telefono')
     correo = data.get('correo')
     contrasena = data.get('contrasena')
 
-    if not correo or not contrasena:
-        return jsonify({"message": "Correo y contraseña requeridos"}), 400
+    # Validar que todos los campos estén presentes
+    if not all([ci, nombre, apellido, fecha_nacimiento_str, correo, contrasena]):
+        return jsonify({"message": "Todos los campos son obligatorios"}), 400
+
+    # Convertir la fecha al formato 'YYYY-MM-DD'
+    try:
+        fecha_nacimiento = datetime.strptime(fecha_nacimiento_str, '%d-%m-%Y').strftime('%Y-%m-%d')
+        # Verificar el valor convertido de fecha
+        print("Fecha de nacimiento convertida:", fecha_nacimiento)
+    except ValueError:
+        return jsonify({"message": "Formato de fecha inválido, use DD-MM-YYYY"}), 400
 
     hashed_password = generate_password_hash(contrasena)
 
@@ -33,7 +47,10 @@ def register():
     cursor = conn.cursor()
 
     try:
-        cursor.execute("INSERT INTO login (correo, contraseña) VALUES (%s, %s)", (correo, hashed_password))
+        cursor.execute("""
+            INSERT INTO alumnos (ci, nombre, apellido, fecha_nacimiento, telefono, correo_electronico, contraseña)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+        """, (ci, nombre, apellido, fecha_nacimiento, telefono, correo, hashed_password))
         conn.commit()
         return jsonify({"message": "Usuario registrado exitosamente"}), 201
     except mysql.connector.Error as err:
@@ -56,7 +73,7 @@ def login():
     cursor = conn.cursor(dictionary=True)
 
     try:
-        cursor.execute("SELECT * FROM login WHERE correo = %s", (correo,))
+        cursor.execute("SELECT * FROM alumnos WHERE correo_electronico = %s", (correo,))
         user = cursor.fetchone()
 
         if user and check_password_hash(user['contraseña'], contrasena):
