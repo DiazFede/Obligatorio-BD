@@ -40,6 +40,7 @@ export const createAlumno = (alumno) => {
 
 export const updateAlumno = (ci, alumno) => apiRequest(`${BASE_URL}/alumnos/${ci}`, 'PUT', alumno);
 export const deleteAlumno = (ci) => apiRequest(`${BASE_URL}/alumnos/${ci}`, 'DELETE');
+export const getAlumnoByCi = (ci) => apiRequest(`${BASE_URL}/alumnos/${ci}`, 'GET');
 
 // Methods for managing instructors
 export const getInstructores = () => apiRequest(`${BASE_URL}/instructores`, 'GET');
@@ -90,7 +91,12 @@ export const loginUser = async (correo, contrasena) => {
         const errorData = await response.json();
         throw new Error(`Login failed: ${errorData.message}`);
     }
-    return response.json();
+
+    // Guardar el CI del usuario en localStorage antes de devolver la respuesta
+    const data = await response.json();
+    localStorage.setItem("userCi", data.ci); // Asegúrate de que el campo 'ci' esté presente en la respuesta
+
+    return data; // Retornar la respuesta con los datos del usuario
 };
 
 // Reports

@@ -17,6 +17,11 @@ const Login = () => {
     try {
       const response = await loginUser(email, password);
       console.log("Login successful:", response);
+
+      // Guardar el CI del usuario en localStorage
+      localStorage.setItem("userCi", response.ci);
+
+      // Redirigir a la página Home
       navigate("/home");
     } catch (error) {
       console.error("Login failed:", error);
