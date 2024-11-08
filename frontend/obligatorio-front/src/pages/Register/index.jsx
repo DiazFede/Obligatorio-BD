@@ -26,8 +26,28 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Transformación del objeto formData para que coincida con los campos esperados por el backend
+    const alumnoData = {
+      ci: formData.cedula,
+      nombre: formData.nombre,
+      apellido: formData.apellido,
+      correo: formData.email,
+      telefono: formData.telefono,
+      contrasena: formData.password,
+    };
+
+    // Convertir fechaNacimiento al formato DD-MM-YYYY
+    if (formData.fechaNacimiento) {
+      const date = new Date(formData.fechaNacimiento);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      alumnoData.fecha_nacimiento = `${day}-${month}-${year}`;
+    }
+
     try {
-      await createAlumno(formData);
+      await createAlumno(alumnoData);
       navigate('/home'); // Redirige a Home después del registro exitoso
     } catch (error) {
       console.error("Error al registrar el usuario:", error);
