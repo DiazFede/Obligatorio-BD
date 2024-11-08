@@ -92,3 +92,15 @@ export const loginUser = async (correo, contrasena) => {
     }
     return response.json();
 };
+
+// Reports
+export const reportIngresosActividades = () => apiRequest(`${BASE_URL}/report/ingresos_actividades`, 'GET');
+export const reportAlumnosActividades = () => apiRequest(`${BASE_URL}/report/alumnos_actividades`, 'GET');
+export const reportTurnosClases = () => apiRequest(`${BASE_URL}/report/turnos_clases`, 'GET');
+
+// Verificación de disponibilidad de clases
+export const verifyClassAvailability = (data) => apiRequest(`${BASE_URL}/verify_class_availability`, 'POST', data);
+
+// Gestión de alquiler de equipamiento
+export const rentEquipmentToAlumno = (idEquipamiento, ciAlumno) => apiRequest(`${BASE_URL}/alumno_clase/rent`, 'POST', { idEquipamiento, ciAlumno });
+export const releaseEquipmentFromAlumno = (idEquipamiento, ciAlumno) => apiRequest(`${BASE_URL}/alumno_clase/release`, 'POST', { idEquipamiento, ciAlumno });
