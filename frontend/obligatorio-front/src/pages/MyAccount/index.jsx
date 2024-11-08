@@ -1,44 +1,50 @@
 import React, { useState, useEffect } from "react";
-import { getAlumnos } from "../../apiservices/api";
+import { getAlumnoByCi } from "../../apiservices/api"; 
+import { useNavigate } from "react-router-dom";
 import styles from './index.module.css';
 
 const MyAccount = () => {
-    const [alumno, setAlumno] = useState(null);
-    const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState(null);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchAlumnoData = async () => {
-            try {
-                const data = await getAlumnos();
-                setAlumno(data[0]);
-            } catch (error) {
-                setError("Error al obtener los datos.");
-            }
-        };
+  const userCi = localStorage.getItem("userCi");
 
-        fetchAlumnoData();
-    }, []);
-
-    if (error) {
-        return <p>{error}</p>;
+  useEffect(() => {
+    if (!userCi) {
+      navigate("/");
+      return;
     }
 
-    return (
-        <div className={styles.accountContainer}>
-            {alumno ? (
-                <div className={styles.accountDetails}>
-                    <h1>Mis datos</h1>
-                    <p><strong>Nombre:</strong> {alumno.nombre}</p>
-                    <p><strong>Apellido:</strong> {alumno.apellido}</p>
-                    <p><strong>CI:</strong> {alumno.ci}</p>
-                    <p><strong>Email:</strong> {alumno.email}</p>
-                    <p><strong>Fecha de Nacimiento:</strong> {alumno.fecha_nacimiento}</p>
-                </div>
-            ) : (
-                <p>Cargando tus datos...</p>
-            )}
+    const fetchUserData = async () => {
+      try {
+        const data = await getAlumnoByCi(userCi);
+        setUserData(data);
+      } catch (error) {
+        setError("Error al cargar los datos del usuario.");
+        console.error(error);
+      }
+    };
+
+    fetchUserData();
+  }, [navigate, userCi]);
+
+  return (
+    <div className={styles.accountContainer}>
+      {error && <p className={styles.error}>{error}</p>}
+      {userData ? (
+        <div className={styles.accountDetails}>
+          <h2>Mis Datos</h2>
+          <p><strong>Nombre:</strong> {userData.nombre}</p>
+          <p><strong>Apellido:</strong> {userData.apellido}</p>
+          <p><strong>Email:</strong> {userData.email}</p>
+          <p><strong>Fecha de Nacimiento:</strong> {userData.fecha_nacimiento}</p>
         </div>
-    );
+      ) : (
+        <p>Cargando datos...</p>
+      )}
+    </div>
+  );
 };
 
 export default MyAccount;
