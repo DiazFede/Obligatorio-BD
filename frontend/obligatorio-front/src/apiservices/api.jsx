@@ -1,4 +1,4 @@
-const BASE_URL = 'http://127.0.0.1:5000'; 
+const BASE_URL = 'http://127.0.0.1:5000';
 
 // Generic function for making requests
 const apiRequest = async (url, method, body) => {
@@ -19,13 +19,25 @@ const apiRequest = async (url, method, body) => {
         return response.json();
     } catch (error) {
         console.error("API Request Error:", error);
-        throw error; // Rethrow the error after logging
+        throw error;
     }
 };
 
 // Methods for managing students
 export const getAlumnos = () => apiRequest(`${BASE_URL}/alumnos`, 'GET');
-export const createAlumno = (alumno) => apiRequest(`${BASE_URL}/alumnos`, 'POST', alumno);
+
+// Actualización de createAlumno para incluir los campos adicionales de la tabla `alumnos`
+export const createAlumno = (alumno) => {
+    // Formato de fecha que el backend espera (DD-MM-YYYY)
+    if (alumno.fecha_nacimiento instanceof Date) {
+        const day = String(alumno.fecha_nacimiento.getDate()).padStart(2, '0');
+        const month = String(alumno.fecha_nacimiento.getMonth() + 1).padStart(2, '0');
+        const year = alumno.fecha_nacimiento.getFullYear();
+        alumno.fecha_nacimiento = `${day}-${month}-${year}`;
+    }
+    return apiRequest(`${BASE_URL}/register`, 'POST', alumno);
+};
+
 export const updateAlumno = (ci, alumno) => apiRequest(`${BASE_URL}/alumnos/${ci}`, 'PUT', alumno);
 export const deleteAlumno = (ci) => apiRequest(`${BASE_URL}/alumnos/${ci}`, 'DELETE');
 
@@ -54,16 +66,17 @@ export const updateTurno = (id, turno) => apiRequest(`${BASE_URL}/turnos/${id}`,
 export const deleteTurno = (id) => apiRequest(`${BASE_URL}/turnos/${id}`, 'DELETE');
 
 // Methods for managing classes
-export const getClases = () => apiRequest(`${BASE_URL}/clases`, 'GET');
-export const createClase = (clase) => apiRequest(`${BASE_URL}/clases`, 'POST', clase);
-export const updateClase = (id, clase) => apiRequest(`${BASE_URL}/clases/${id}`, 'PUT', clase);
-export const deleteClase = (id) => apiRequest(`${BASE_URL}/clases/${id}`, 'DELETE');
+export const getClases = () => apiRequest(`${BASE_URL}/clase`, 'GET');
+export const createClase = (clase) => apiRequest(`${BASE_URL}/clase`, 'POST', clase);
+export const updateClase = (id, clase) => apiRequest(`${BASE_URL}/clase/${id}`, 'PUT', clase);
+export const deleteClase = (id) => apiRequest(`${BASE_URL}/clase/${id}`, 'DELETE');
 
 // Methods for managing student-class relationships
 export const getAlumnoClase = () => apiRequest(`${BASE_URL}/alumno_clase`, 'GET');
 export const createAlumnoClase = (alumnoClase) => apiRequest(`${BASE_URL}/alumno_clase`, 'POST', alumnoClase);
-export const deleteAlumnoClase = (idClase, ciAlumno) => apiRequest(`${BASE_URL}/alumno_clase`, 'DELETE', { id_clase: idClase, ci_alumno: ciAlumno });
+export const deleteAlumnoClase = (idClase, ciAlumno) => apiRequest(`${BASE_URL}/alumno_clase/${idClase}/${ciAlumno}`, 'DELETE');
 
+// Login
 export const loginUser = async (correo, contrasena) => {
     const response = await fetch(`${BASE_URL}/login`, {
         method: 'POST',
