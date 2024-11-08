@@ -27,7 +27,6 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Transformación del objeto formData para que coincida con los campos esperados por el backend
     const alumnoData = {
       ci: formData.cedula,
       nombre: formData.nombre,
@@ -37,7 +36,6 @@ const Register = () => {
       contrasena: formData.password,
     };
 
-    // Convertir fechaNacimiento al formato DD-MM-YYYY
     if (formData.fechaNacimiento) {
       const date = new Date(formData.fechaNacimiento);
       const day = String(date.getDate()).padStart(2, '0');
@@ -48,7 +46,7 @@ const Register = () => {
 
     try {
       await createAlumno(alumnoData);
-      navigate('/home'); // Redirige a Home después del registro exitoso
+      navigate('/home');
     } catch (error) {
       console.error("Error al registrar el usuario:", error);
     }
@@ -58,6 +56,7 @@ const Register = () => {
     <>
       <HeaderLogin />
       <div className={styles.registerForm}>
+        <h2>Registrate</h2>
         <form onSubmit={handleSubmit} className={styles.form}>
           <label className={styles.label}>Cédula de identidad</label>
           <input
