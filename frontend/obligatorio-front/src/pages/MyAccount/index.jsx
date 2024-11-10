@@ -19,6 +19,7 @@ const MyAccount = () => {
     const fetchUserData = async () => {
       try {
         const data = await getAlumnoByCi(userCi);
+        console.log(data); // Verifica la respuesta
         setUserData(data);
       } catch (error) {
         setError("Error al cargar los datos del usuario.");
