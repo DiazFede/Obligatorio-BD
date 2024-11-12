@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import HeaderLogin from "../../components/HeaderLogin";
 import { loginUser } from "../../apiservices/api"; 
+import { useUserContext } from "../../contexts/UserContext";
 import styles from './index.module.css';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { updateUser } = useUserContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -18,8 +20,8 @@ const Login = () => {
       const response = await loginUser(email, password);
       console.log("Login successful:", response);
 
-      // Guardar el CI del usuario en localStorage
-      localStorage.setItem("userCi", response.ci);
+      // Guardar los datos del usuario en UserContext
+      updateUser(response);
 
       // Redirigir a la página Home
       navigate("/home");
