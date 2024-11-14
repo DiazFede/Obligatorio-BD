@@ -9,7 +9,7 @@ const HeaderHelp = () => {
   const navigate = useNavigate();
 
   const handleHomeClick = () => {
-    navigate('/');
+    navigate('/home');
   };
 
   return (
@@ -19,7 +19,7 @@ const HeaderHelp = () => {
       </button>
 
       <h2 className={styles.title}>Preguntas frecuentes</h2>
-      
+
       <button className={styles.hiddenButton}>
         <FontAwesomeIcon icon={faHouse} style={{ color: 'white' }} />
       </button>
