@@ -570,3 +570,32 @@ def release_equipment_from_alumno():
     finally:
         cursor.close()
         conn.close()
+
+        
+@app.route('/adminlogin', methods=['POST'])
+def admin_login():
+    data = request.get_json()
+    correo = data.get('correo')
+    contrasena = data.get('contrasena')
+
+    if not correo or not contrasena:
+        return jsonify({"message": "Correo y contraseña requeridos"}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    try:
+        # Obtén el registro de admin por correo
+        cursor.execute("SELECT * FROM admin WHERE correo = %s", (correo,))
+        admin = cursor.fetchone()
+
+        # Compara la contraseña en texto plano en lugar de usar un hash
+        if admin and admin['contraseña'] == contrasena:
+            return jsonify({"message": "Inicio de sesión de admin exitoso."})
+        else:
+            return jsonify({"message": "Correo o contraseña de admin incorrectos."}), 401
+    except mysql.connector.Error as err:
+        return jsonify({"message": f"Error en el login de admin: {err}"}), 500
+    finally:
+        cursor.close()
+        conn.close()
