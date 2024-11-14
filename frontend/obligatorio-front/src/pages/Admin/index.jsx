@@ -55,6 +55,23 @@ const Admin = () => {
     return (
         <>
             <HeaderAdmin />
+            <div className={styles.cardContainer}>
+                {instructores.map((instructor) => (
+                    <CardHome 
+                        key={instructor.ci} 
+                        title={instructor.nombre} 
+                        content={
+                            <>
+                                <p>Cédula: {instructor.ci}</p>
+                                <p>Disponibilidad: {instructor.disponibilidad}</p>
+                                <button onClick={() => handleEdit(instructor)}>Editar</button>
+                                <button onClick={() => handleDelete(instructor.ci)}>Eliminar</button>
+                            </>
+                        } 
+                    />
+                ))}
+            </div>
+            
             <form onSubmit={handleSubmit}>
                 <input 
                     type="text" 
@@ -83,23 +100,6 @@ const Admin = () => {
                 />
                 <button type="submit">{isEditing ? "Actualizar" : "Agregar"}</button>
             </form>
-
-            <div className={styles.cardContainer}>
-                {instructores.map((instructor) => (
-                    <CardHome 
-                        key={instructor.ci} 
-                        title={instructor.nombre} 
-                        content={
-                            <>
-                                <p>Cédula: {instructor.ci}</p>
-                                <p>Disponibilidad: {instructor.disponibilidad}</p>
-                                <button onClick={() => handleEdit(instructor)}>Editar</button>
-                                <button onClick={() => handleDelete(instructor.ci)}>Eliminar</button>
-                            </>
-                        } 
-                    />
-                ))}
-            </div>
         </>
     );
 };
