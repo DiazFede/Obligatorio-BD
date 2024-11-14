@@ -93,6 +93,7 @@ export const loginUser = async (correo, contrasena) => {
     }
 
     const data = await response.json();
+    console.log("Login response:", data);
     return data; // Retornar la respuesta con los datos del usuario
 };
 
