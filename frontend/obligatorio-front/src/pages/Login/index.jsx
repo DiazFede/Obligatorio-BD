@@ -5,6 +5,7 @@ import { loginUser } from "../../apiservices/api";
 import styles from './index.module.css';
 
 const Login = () => {
+  
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,10 +19,8 @@ const Login = () => {
       const response = await loginUser(email, password);
       console.log("Login successful:", response);
 
-      // Guardar el CI del usuario en localStorage
       localStorage.setItem("userCi", response.ci);
 
-      // Redirigir a la página Home
       navigate("/home");
     } catch (error) {
       console.error("Login failed:", error);

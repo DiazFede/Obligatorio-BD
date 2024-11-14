@@ -10,7 +10,7 @@ const HeaderLogin = () => {
   const navigate = useNavigate();
 
   const handleAdminClick = () => {
-    navigate('/admin');
+    navigate('/adminlogin');
   }
   
   const handleHelpClick = () => {

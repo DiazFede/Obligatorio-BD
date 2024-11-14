@@ -1,0 +1,65 @@
+.header {
+    display: flex;
+    width: auto;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-image: url('../../assets/background.jpg');
+    background-position: top;
+    background-size: cover;
+    color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    padding: 0 20px;
+    flex-grow: 1;
+}
+
+.header button {
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.backButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+  }
+  
+
+.helpButton {
+    visibility: hidden;
+}
+
+.backButton:hover {
+    transform: scale(1.1);
+}
+
+.header * {
+    position: relative;
+    z-index: 1;
+}
