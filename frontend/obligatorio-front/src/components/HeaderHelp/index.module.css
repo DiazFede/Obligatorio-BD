@@ -36,3 +36,18 @@
     padding: 0 20px;
     flex-grow: 1;
 }
+
+.homeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.homeButton:hover {
+    transform: scale(1.1);
+}
+
+.hiddenButton {
+    visibility: hidden;
+}
