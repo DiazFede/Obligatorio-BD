@@ -5,6 +5,7 @@ import Login from './pages/Login'
 import Help from './pages/Help';
 import Register from './pages/Register';
 import MyAccount from './pages/MyAccount';
+import Admin from './pages/Admin';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/help" element={<Help />} /> {/* Ruta a Help */}
           <Route path="register" element={<Register />} /> {/* Ruta a Register */}
           <Route path="/myaccount" element={<MyAccount />} /> {/* Ruta a MyAccount */}
+          <Route path="admin" element={<Admin />} /> {/* Ruta a Admin */}
         </Routes>
       </Router>
     </>
