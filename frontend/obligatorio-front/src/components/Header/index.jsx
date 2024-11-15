@@ -2,12 +2,15 @@ import React from 'react';
 import styles from './index.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from "react-router-dom";
+
 
 const Header = ({ openModal }) => {
+  const navigate = useNavigate();
   return (
     <div className={styles.header}>
         <button onClick={() => {
-          window.location.href = `/myaccount`;
+          navigate(`/myaccount`);
         }} className={styles.iconButton}>
           <FontAwesomeIcon icon={faUser} />
         </button>

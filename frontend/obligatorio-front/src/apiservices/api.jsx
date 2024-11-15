@@ -118,10 +118,8 @@ export const loginUser = async (correo, contrasena) => {
         throw new Error(`Login failed: ${errorData.message}`);
     }
 
-    // Guardar el CI del usuario en localStorage antes de devolver la respuesta
     const data = await response.json();
-    localStorage.setItem("userCi", data.ci); // Asegúrate de que el campo 'ci' esté presente en la respuesta
-
+    console.log("Login response:", data);
     return data; // Retornar la respuesta con los datos del usuario
 };
 
