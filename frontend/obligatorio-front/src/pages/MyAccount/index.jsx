@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { getAlumnoByCi } from "../../apiservices/api"; 
 import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../contexts/UserContext";
 import styles from './index.module.css';
 
 const MyAccount = () => {
   const navigate = useNavigate();
+  const { user } = useUserContext();
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState(null);
 
-  const userCi = localStorage.getItem("userCi");
-
   useEffect(() => {
-    if (!userCi) {
+    if (!user) {
       navigate("/");
       return;
     }
 
     const fetchUserData = async () => {
       try {
-        const data = await getAlumnoByCi(userCi);
-        console.log(data); // Verifica la respuesta
+        const data = await getAlumnoByCi(user.ci);  // Obtiene el CI desde el contexto
+        console.log(data);
         setUserData(data);
       } catch (error) {
         setError("Error al cargar los datos del usuario.");
@@ -28,7 +28,7 @@ const MyAccount = () => {
     };
 
     fetchUserData();
-  }, [navigate, userCi]);
+  }, [navigate, user]);
 
   return (
     <div className={styles.accountContainer}>
