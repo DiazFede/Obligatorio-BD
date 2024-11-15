@@ -77,7 +77,7 @@ def login():
         user = cursor.fetchone()
 
         if user and check_password_hash(user['contraseña'], contrasena):
-            return jsonify({"message": "Inicio de sesión exitoso."})
+            return jsonify({"data": user}), 200
         else:
             return jsonify({"message": "Correo o contraseña incorrectos."}), 401
     except mysql.connector.Error as err:

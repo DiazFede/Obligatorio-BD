@@ -4,9 +4,9 @@ import Header from '../../components/Header';
 import Modal from '../../components/Modal';
 import CardHome from '../../components/CardHome';
 
+
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
