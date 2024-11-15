@@ -1,4 +1,30 @@
+// Base URL del backend
 const BASE_URL = 'http://127.0.0.1:5000';
+
+// Función de login para el administrador
+export const loginAdmin = async (correo, contrasena) => {
+    try {
+        const response = await fetch(`${BASE_URL}/adminlogin`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ correo, contrasena }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Error en inicio de sesión de admin: ${errorData.message}`);
+        }
+
+        // Si el inicio de sesión es exitoso, devuelve la respuesta
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error en login de admin:", error);
+        throw error;
+    }
+};
 
 // Generic function for making requests
 const apiRequest = async (url, method, body) => {
@@ -92,10 +118,8 @@ export const loginUser = async (correo, contrasena) => {
         throw new Error(`Login failed: ${errorData.message}`);
     }
 
-    // Guardar el CI del usuario en localStorage antes de devolver la respuesta
     const data = await response.json();
-    localStorage.setItem("userCi", data.ci); // Asegúrate de que el campo 'ci' esté presente en la respuesta
-
+    console.log("Login response:", data);
     return data; // Retornar la respuesta con los datos del usuario
 };
 
