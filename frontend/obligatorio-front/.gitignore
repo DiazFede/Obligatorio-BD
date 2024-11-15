@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Ignorar los archivos de caché de Python
+__pycache__/
+*.pyc
