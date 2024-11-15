@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getInstructores, createInstructor, updateInstructor, deleteInstructor } from "../../apiservices/api";
 import HeaderAdmin from "../../components/HeaderAdmin";
-import CardHome from "../../components/CardHome";
+import CardAdmin from "../../components/CardAdmin";
 import styles from './index.module.css';
 
 const Admin = () => {
@@ -57,15 +57,15 @@ const Admin = () => {
             <HeaderAdmin />
             <div className={styles.cardContainer}>
                 {instructores.map((instructor) => (
-                    <CardHome 
+                    <CardAdmin 
                         key={instructor.ci} 
                         title={instructor.nombre} 
                         content={
                             <>
                                 <p>Cédula: {instructor.ci}</p>
                                 <p>Disponibilidad: {instructor.disponibilidad}</p>
-                                <button onClick={() => handleEdit(instructor)}>Editar</button>
-                                <button onClick={() => handleDelete(instructor.ci)}>Eliminar</button>
+                                <button onClick={() => handleEdit(instructor)} className={styles.editButton}>Editar</button>
+                                <button onClick={() => handleDelete(instructor.ci)} className={styles.deleteButton}>Eliminar</button>
                             </>
                         } 
                     />
@@ -98,7 +98,7 @@ const Admin = () => {
                     required 
                     disabled={isEditing}
                 />
-                <button type="submit">{isEditing ? "Actualizar" : "Agregar"}</button>
+                <button type="submit" className={styles.button}>{isEditing ? "Actualizar" : "Agregar"}</button>
             </form>
         </>
     );

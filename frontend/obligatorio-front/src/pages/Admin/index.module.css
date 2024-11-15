@@ -14,20 +14,10 @@ form input[type="text"] {
     border-radius: 8px;
     background-color: #f7f7f7;
     font-size: 16px;
+    color: #333;
 }
 
-form button[type="submit"] {
-    background-color: #333; /* Color oscuro */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 10px;
-    font-size: 16px;
-}
-
-button {
+.button {
     background-color: #333; /* Color oscuro */
     color: white;
     padding: 8px 16px;
@@ -38,6 +28,32 @@ button {
     margin: 5px; /* Espacio entre botones */
 }
 
-button:hover {
+.button:hover {
     background-color: #555; /* Color al pasar el mouse */
+}
+
+.cardContainer .editButton {
+    background-color: #0066cc;
+    color: white;
+    font-size: 16px;
+    padding: 5px;
+    margin: 4px;
+    border: none;
+}
+
+.cardContainer .editButton:hover {
+    background-color: #004e9b;
+}
+
+.cardContainer .deleteButton {
+    background-color: rgb(176, 31, 31);
+    color: white;
+    font-size: 16px;
+    padding: 5px;
+    margin: 4px;
+    border: none;
+}
+
+.cardContainer .deleteButton:hover {
+    background-color: rgb(135, 23, 23);
 }
