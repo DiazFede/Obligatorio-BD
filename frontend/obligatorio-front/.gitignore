@@ -23,6 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-# Ignorar los archivos de caché de Python
+# Pyhton
 __pycache__/
 *.pyc

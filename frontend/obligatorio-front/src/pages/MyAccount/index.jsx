@@ -6,6 +6,7 @@ import styles from './index.module.css';
 const MyAccount = () => {
   const navigate = useNavigate();
   const { user } = useUserContext();
+  console.log(user)
 
   useEffect(() => {
     if (!user) {
