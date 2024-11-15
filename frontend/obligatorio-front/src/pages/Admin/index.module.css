@@ -13,27 +13,27 @@ form input[type="text"] {
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #f7f7f7;
-    font-size: 16px;
+    font-size: 14px;
     color: #333;
 }
 
 .button {
-    background-color: #333; /* Color oscuro */
+    background-color: #333;
     color: white;
     padding: 8px 16px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-size: 14px;
-    margin: 5px; /* Espacio entre botones */
+    margin: 5px;
 }
 
 .button:hover {
-    background-color: #555; /* Color al pasar el mouse */
+    background-color: #555;
 }
 
 .cardContainer .editButton {
-    background-color: #0066cc;
+    background-color: #383838;
     color: white;
     font-size: 16px;
     padding: 5px;
@@ -42,11 +42,11 @@ form input[type="text"] {
 }
 
 .cardContainer .editButton:hover {
-    background-color: #004e9b;
+    background-color: #333;
 }
 
 .cardContainer .deleteButton {
-    background-color: rgb(176, 31, 31);
+    background-color: #383838;
     color: white;
     font-size: 16px;
     padding: 5px;
@@ -55,5 +55,5 @@ form input[type="text"] {
 }
 
 .cardContainer .deleteButton:hover {
-    background-color: rgb(135, 23, 23);
+    background-color: #333;
 }

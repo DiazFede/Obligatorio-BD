@@ -6,7 +6,7 @@ import styles from './index.module.css';
 
 const Admin = () => {
     const [instructores, setInstructores] = useState([]);
-    const [form, setForm] = useState({ nombre: "", disponibilidad: "", ci: "" });
+    const [form, setForm] = useState({ nombre: "", apellido: "", ci: "", disponibilidad: "", experiencia: "" });
     const [isEditing, setIsEditing] = useState(false);
     const [selectedInstructor, setSelectedInstructor] = useState(null);
 
@@ -36,7 +36,7 @@ const Admin = () => {
             await createInstructor(form);
         }
         loadInstructores();
-        setForm({ nombre: "", disponibilidad: "", ci: "" });
+        setForm({ nombre: "", apellido: "", ci: "", disponibilidad: "", experiencia: "" });
         setIsEditing(false);
         setSelectedInstructor(null);
     };
@@ -57,46 +57,63 @@ const Admin = () => {
             <HeaderAdmin />
             <div className={styles.cardContainer}>
                 {instructores.map((instructor) => (
-                    <CardAdmin 
-                        key={instructor.ci} 
-                        title={instructor.nombre} 
+                    <CardAdmin
+                        key={instructor.ci}
+                        title={instructor.nombre + " " + instructor.apellido}
                         content={
                             <>
                                 <p>Cédula: {instructor.ci}</p>
                                 <p>Disponibilidad: {instructor.disponibilidad}</p>
+                                <p>Experiencia: {instructor.experiencia}</p>
                                 <button onClick={() => handleEdit(instructor)} className={styles.editButton}>Editar</button>
                                 <button onClick={() => handleDelete(instructor.ci)} className={styles.deleteButton}>Eliminar</button>
                             </>
-                        } 
+                        }
                     />
                 ))}
             </div>
-            
+
             <form onSubmit={handleSubmit}>
-                <input 
-                    type="text" 
-                    name="nombre" 
-                    value={form.nombre} 
-                    onChange={handleInputChange} 
+                <input
+                    type="text"
+                    name="nombre"
+                    value={form.nombre}
+                    onChange={handleInputChange}
                     placeholder="Nombre"
-                    required 
+                    required
                 />
-                <input 
-                    type="text" 
-                    name="disponibilidad" 
-                    value={form.disponibilidad} 
-                    onChange={handleInputChange} 
-                    placeholder="Disponibilidad"
-                    required 
+                <input
+                    type="text"
+                    name="apellido"
+                    value={form.apellido}
+                    onChange={handleInputChange}
+                    placeholder="Apellido"
+                    required
                 />
-                <input 
-                    type="text" 
-                    name="ci" 
-                    value={form.ci} 
-                    onChange={handleInputChange} 
+                <input
+                    type="text"
+                    name="ci"
+                    value={form.ci}
+                    onChange={handleInputChange}
                     placeholder="CI"
-                    required 
+                    required
                     disabled={isEditing}
+                />
+                <input
+                    type="text"
+                    name="disponibilidad"
+                    value={form.disponibilidad}
+                    onChange={handleInputChange}
+                    placeholder="Disponibilidad"
+                    required
+                />
+                <input
+                    type="text"
+                    name="experiencia"
+                    value={form.experiencia}
+                    onChange={handleInputChange}
+                    placeholder="Experiencia"
+                    required
                 />
                 <button type="submit" className={styles.button}>{isEditing ? "Actualizar" : "Agregar"}</button>
             </form>

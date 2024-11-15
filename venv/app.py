@@ -184,7 +184,6 @@ def equipamiento_by_id(id):
         conn.close()
         return jsonify({"message": "Equipamiento eliminado exitosamente."})
 
-# CRUD para instructores
 @app.route('/instructores', methods=['GET', 'POST'])
 def instructores():
     conn = get_db_connection()
@@ -199,7 +198,10 @@ def instructores():
     
     elif request.method == 'POST':
         data = request.get_json()
-        cursor.execute("INSERT INTO instructores (ci, nombre, apellido) VALUES (%s, %s, %s)", (data['ci'], data['nombre'], data['apellido']))
+        cursor.execute(
+            "INSERT INTO instructores (ci, nombre, apellido, experiencia, disponibilidad) VALUES (%s, %s, %s, %s, %s)",
+            (data['ci'], data['nombre'], data['apellido'], data['experiencia'], data['disponibilidad'])
+        )
         conn.commit()
         cursor.close()
         conn.close()
@@ -212,18 +214,30 @@ def instructor_by_ci(ci):
 
     if request.method == 'PUT':
         data = request.get_json()
-        cursor.execute("UPDATE instructores SET nombre = %s, apellido = %s WHERE ci = %s", (data['nombre'], data['apellido'], ci))
+        
+        # Actualizar nombre, apellido, disponibilidad y experiencia
+        cursor.execute(
+            """
+            UPDATE instructores 
+            SET nombre = %s, apellido = %s, disponibilidad = %s, experiencia = %s 
+            WHERE ci = %s
+            """,
+            (data['nombre'], data['apellido'], data['disponibilidad'], data['experiencia'], ci)
+        )
+        print(data)
         conn.commit()
         cursor.close()
         conn.close()
         return jsonify({"message": "Instructor actualizado exitosamente."})
 
     elif request.method == 'DELETE':
+        # Eliminar el instructor por CI
         cursor.execute("DELETE FROM instructores WHERE ci = %s", (ci,))
         conn.commit()
         cursor.close()
         conn.close()
         return jsonify({"message": "Instructor eliminado exitosamente."})
+
 
 # CRUD para turnos
 @app.route('/turnos', methods=['GET', 'POST'])
