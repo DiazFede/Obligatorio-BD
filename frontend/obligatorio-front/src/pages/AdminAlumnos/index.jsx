@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getAlumnos, createAlumno, updateAlumno, deleteAlumno } from "../../apiservices/api";
-import HeaderAdmin from "../../components/HeaderAdmin";
+import { getAlumnos, updateAlumno, deleteAlumno } from "../../apiservices/api";
+import HeaderAdminAlumnos from "../../components/HeaderAdminAlumnos";
 import CardAdmin from "../../components/CardAdmin";
 import styles from './index.module.css';
 
@@ -32,17 +32,18 @@ const AdminAlumnos = () => {
         e.preventDefault();
         if (isEditing) {
             await updateAlumno(selectedAlumno.ci, form);
-        } else {
-            await createAlumno(form);
+            loadAlumnos();
+            setForm({ nombre: "", apellido: "", ci: "", fecha_nacimiento: "", email: "" });
+            setIsEditing(false);
+            setSelectedAlumno(null);
         }
-        loadAlumnos();
-        setForm({ nombre: "", apellido: "", ci: "", fecha_nacimiento: "", email: "" });
-        setIsEditing(false);
-        setSelectedAlumno(null);
     };
 
     const handleEdit = (alumno) => {
-        setForm(alumno);
+        setForm({
+            ...alumno,
+            fecha_nacimiento: new Date(alumno.fecha_nacimiento).toISOString().split("T")[0], // Formato YYYY-MM-DD
+        });
         setIsEditing(true);
         setSelectedAlumno(alumno);
     };
@@ -54,7 +55,7 @@ const AdminAlumnos = () => {
 
     return (
         <>
-            <HeaderAdmin />
+            <HeaderAdminAlumnos />
             <div className={styles.cardContainer}>
                 {alumnos.map((alumno) => (
                     <CardAdmin
@@ -73,50 +74,44 @@ const AdminAlumnos = () => {
                 ))}
             </div>
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name="nombre"
-                    value={form.nombre}
-                    onChange={handleInputChange}
-                    placeholder="Nombre"
-                    required
-                />
-                <input
-                    type="text"
-                    name="apellido"
-                    value={form.apellido}
-                    onChange={handleInputChange}
-                    placeholder="Apellido"
-                    required
-                />
-                <input
-                    type="text"
-                    name="ci"
-                    value={form.ci}
-                    onChange={handleInputChange}
-                    placeholder="CI"
-                    required
-                    disabled={isEditing}
-                />
-                <input
-                    type="date"
-                    name="fecha_nacimiento"
-                    value={form.fecha_nacimiento}
-                    onChange={handleInputChange}
-                    placeholder="Fecha de Nacimiento"
-                    required
-                />
-                <input
-                    type="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleInputChange}
-                    placeholder="Email"
-                    required
-                />
-                <button type="submit" className={styles.button}>{isEditing ? "Actualizar" : "Agregar"}</button>
-            </form>
+            {isEditing && (
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        name="nombre"
+                        value={form.nombre}
+                        onChange={handleInputChange}
+                        placeholder="Nombre"
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="apellido"
+                        value={form.apellido}
+                        onChange={handleInputChange}
+                        placeholder="Apellido"
+                        required
+                    />
+                    <input
+                        type="date"
+                        name="fecha_nacimiento"
+                        value={form.fecha_nacimiento}
+                        onChange={handleInputChange}
+                        placeholder="Fecha de Nacimiento"
+                        required
+                        disabled={isEditing}
+                    />
+                    <input
+                        type="email"
+                        name="email"
+                        value={form.email}
+                        onChange={handleInputChange}
+                        placeholder="Email"
+                        required
+                    />
+                    <button type="submit" className={styles.button}>Actualizar</button>
+                </form>
+            )}
         </>
     );
 };
