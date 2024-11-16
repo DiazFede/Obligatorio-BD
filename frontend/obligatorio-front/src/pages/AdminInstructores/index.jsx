@@ -75,6 +75,7 @@ const AdminInstructores = () => {
 
             <form onSubmit={handleSubmit}>
                 <input
+                    className={styles.input}
                     type="text"
                     name="nombre"
                     value={form.nombre}
@@ -83,6 +84,7 @@ const AdminInstructores = () => {
                     required
                 />
                 <input
+                    className={styles.input}
                     type="text"
                     name="apellido"
                     value={form.apellido}
@@ -91,6 +93,7 @@ const AdminInstructores = () => {
                     required
                 />
                 <input
+                    className={styles.input}
                     type="text"
                     name="ci"
                     value={form.ci}
@@ -100,6 +103,7 @@ const AdminInstructores = () => {
                     disabled={isEditing}
                 />
                 <input
+                    className={styles.input}
                     type="text"
                     name="disponibilidad"
                     value={form.disponibilidad}
@@ -108,6 +112,7 @@ const AdminInstructores = () => {
                     required
                 />
                 <input
+                    className={styles.input}
                     type="text"
                     name="experiencia"
                     value={form.experiencia}

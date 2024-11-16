@@ -77,6 +77,7 @@ const AdminAlumnos = () => {
             {isEditing && (
                 <form onSubmit={handleSubmit}>
                     <input
+                        className={styles.input}
                         type="text"
                         name="nombre"
                         value={form.nombre}
@@ -85,6 +86,7 @@ const AdminAlumnos = () => {
                         required
                     />
                     <input
+                        className={styles.input}
                         type="text"
                         name="apellido"
                         value={form.apellido}
@@ -93,6 +95,7 @@ const AdminAlumnos = () => {
                         required
                     />
                     <input
+                        className={styles.input}
                         type="date"
                         name="fecha_nacimiento"
                         value={form.fecha_nacimiento}
@@ -102,6 +105,7 @@ const AdminAlumnos = () => {
                         disabled={isEditing}
                     />
                     <input
+                        className={styles.input}
                         type="email"
                         name="email"
                         value={form.email}
