@@ -1,122 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { getInstructores, createInstructor, updateInstructor, deleteInstructor } from "../../apiservices/api";
-import HeaderAdmin from "../../components/HeaderAdmin";
-import CardAdmin from "../../components/CardAdmin";
+import React from "react";
 import styles from './index.module.css';
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faUserGraduate } from '@fortawesome/free-solid-svg-icons';
 
 const Admin = () => {
-    const [instructores, setInstructores] = useState([]);
-    const [form, setForm] = useState({ nombre: "", apellido: "", ci: "", disponibilidad: "", experiencia: "" });
-    const [isEditing, setIsEditing] = useState(false);
-    const [selectedInstructor, setSelectedInstructor] = useState(null);
 
-    useEffect(() => {
-        loadInstructores();
-    }, []);
+    const navigate = useNavigate();
 
-    const loadInstructores = async () => {
-        try {
-            const data = await getInstructores();
-            setInstructores(data);
-        } catch (error) {
-            console.error("Error al obtener instructores:", error);
-        }
-    };
+    const handleUserClick = () => {
+        navigate('/adminalumnos')
+    }
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setForm({ ...form, [name]: value });
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (isEditing) {
-            await updateInstructor(selectedInstructor.ci, form);
-        } else {
-            await createInstructor(form);
-        }
-        loadInstructores();
-        setForm({ nombre: "", apellido: "", ci: "", disponibilidad: "", experiencia: "" });
-        setIsEditing(false);
-        setSelectedInstructor(null);
-    };
-
-    const handleEdit = (instructor) => {
-        setForm(instructor);
-        setIsEditing(true);
-        setSelectedInstructor(instructor);
-    };
-
-    const handleDelete = async (ci) => {
-        await deleteInstructor(ci);
-        loadInstructores();
-    };
+    const handleInstructorClick = () => {
+        navigate('/admininstructores')
+    }
 
     return (
         <>
-            <HeaderAdmin />
-            <div className={styles.cardContainer}>
-                {instructores.map((instructor) => (
-                    <CardAdmin
-                        key={instructor.ci}
-                        title={instructor.nombre + " " + instructor.apellido}
-                        content={
-                            <>
-                                <p>Cédula: {instructor.ci}</p>
-                                <p>Disponibilidad: {instructor.disponibilidad}</p>
-                                <p>Experiencia: {instructor.experiencia}</p>
-                                <button onClick={() => handleEdit(instructor)} className={styles.editButton}>Editar</button>
-                                <button onClick={() => handleDelete(instructor.ci)} className={styles.deleteButton}>Eliminar</button>
-                            </>
-                        }
-                    />
-                ))}
-            </div>
+            <div className={styles.generalContainer}>
+                <h2 className={styles.title}>¿Qué desea administrar?</h2>
+                <div className={styles.buttonsContainer}>
+                    <button onClick={handleUserClick} className={styles.button}>
+                        <FontAwesomeIcon icon={faUser} style={{ color: '#333' }} /> Alumnos
+                    </button>
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name="nombre"
-                    value={form.nombre}
-                    onChange={handleInputChange}
-                    placeholder="Nombre"
-                    required
-                />
-                <input
-                    type="text"
-                    name="apellido"
-                    value={form.apellido}
-                    onChange={handleInputChange}
-                    placeholder="Apellido"
-                    required
-                />
-                <input
-                    type="text"
-                    name="ci"
-                    value={form.ci}
-                    onChange={handleInputChange}
-                    placeholder="CI"
-                    required
-                    disabled={isEditing}
-                />
-                <input
-                    type="text"
-                    name="disponibilidad"
-                    value={form.disponibilidad}
-                    onChange={handleInputChange}
-                    placeholder="Disponibilidad"
-                    required
-                />
-                <input
-                    type="text"
-                    name="experiencia"
-                    value={form.experiencia}
-                    onChange={handleInputChange}
-                    placeholder="Experiencia"
-                    required
-                />
-                <button type="submit" className={styles.button}>{isEditing ? "Actualizar" : "Agregar"}</button>
-            </form>
+                    <button onClick={handleInstructorClick} className={styles.button}>
+                        <FontAwesomeIcon icon={faUserGraduate} style={{ color: '#333' }} /> Instructores
+                    </button>
+                </div>
+            </div>
         </>
     );
 };

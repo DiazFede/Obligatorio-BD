@@ -1,0 +1,59 @@
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+form input[type="text"] {
+    padding: 10px;
+    margin: 5px 0;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f7f7f7;
+    font-size: 14px;
+    color: #333;
+}
+
+.button {
+    background-color: #333;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 5px;
+}
+
+.button:hover {
+    background-color: #555;
+}
+
+.cardContainer .editButton {
+    background-color: #383838;
+    color: white;
+    font-size: 16px;
+    padding: 5px;
+    margin: 4px;
+    border: none;
+}
+
+.cardContainer .editButton:hover {
+    background-color: #333;
+}
+
+.cardContainer .deleteButton {
+    background-color: #383838;
+    color: white;
+    font-size: 16px;
+    padding: 5px;
+    margin: 4px;
+    border: none;
+}
+
+.cardContainer .deleteButton:hover {
+    background-color: #333;
+}

@@ -7,6 +7,8 @@ import Register from './pages/Register';
 import MyAccount from './pages/MyAccount';
 import Admin from './pages/Admin';
 import AdminLogin from './pages/AdminLogin';
+import AdminInstructores from './pages/AdminInstructores';
+import AdminAlumnos from './pages/AdminAlumnos';
 import { UserProvider } from './contexts/UserContext';
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
             <Route path="/myaccount" element={<MyAccount />} /> {/* Ruta a MyAccount */}
             <Route path="/admin" element={<Admin />} /> {/* Ruta a Admin */}
             <Route path="/adminlogin" element={<AdminLogin />} /> {/* Ruta a AdminLogin */}
+            <Route path="/admininstructores" element={<AdminInstructores />} /> {/* Ruta a AdminInstructores */}
+            <Route path="/adminalumnos" element={<AdminAlumnos />} /> {/* Ruta a AdminAlumnos */}
           </Routes>
         </Router>
       </UserProvider>
