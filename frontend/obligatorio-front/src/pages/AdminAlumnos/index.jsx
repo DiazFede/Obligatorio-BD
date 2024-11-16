@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { getAlumnos, updateAlumno, deleteAlumno } from "../../apiservices/api";
 import HeaderAdminAlumnos from "../../components/HeaderAdminAlumnos";
+import SearchBar from "../../components/SearchBar"; // Importa la barra de búsqueda
 import CardAdmin from "../../components/CardAdmin";
 import styles from './index.module.css';
 
 const AdminAlumnos = () => {
     const [alumnos, setAlumnos] = useState([]);
+    const [filteredAlumnos, setFilteredAlumnos] = useState([]); // Estado para los alumnos filtrados
+    const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
     const [form, setForm] = useState({ nombre: "", apellido: "", ci: "", fecha_nacimiento: "", correo_electronico: "" });
     const [isEditing, setIsEditing] = useState(false);
     const [selectedAlumno, setSelectedAlumno] = useState(null);
@@ -18,9 +21,20 @@ const AdminAlumnos = () => {
         try {
             const data = await getAlumnos();
             setAlumnos(data);
+            setFilteredAlumnos(data); // Inicialmente todos los alumnos son visibles
         } catch (error) {
             console.error("Error al obtener alumnos:", error);
         }
+    };
+
+    const handleSearchChange = (term) => {
+        setSearchTerm(term);
+        const lowercasedTerm = term.toLowerCase();
+        setFilteredAlumnos(
+            alumnos.filter((alumno) =>
+                alumno.nombre.toLowerCase().includes(lowercasedTerm)
+            )
+        );
     };
 
     const handleInputChange = (e) => {
@@ -56,8 +70,9 @@ const AdminAlumnos = () => {
     return (
         <>
             <HeaderAdminAlumnos />
+            <SearchBar searchTerm={searchTerm} onSearchChange={handleSearchChange} /> {/* Agrega la barra de búsqueda */}
             <div className={styles.cardContainer}>
-                {alumnos.map((alumno) => (
+                {filteredAlumnos.map((alumno) => (
                     <CardAdmin
                         key={alumno.ci}
                         title={alumno.nombre + " " + alumno.apellido}

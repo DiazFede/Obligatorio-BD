@@ -8,7 +8,7 @@ const SearchBar = ({ searchTerm, onSearchChange }) => {
     <input
       type="text"
       className={styles.searchInput}
-      placeholder="Buscar turnos..."
+      placeholder="Buscar alumnos..."
       value={searchTerm}
       onChange={(e) => onSearchChange(e.target.value)}
     />
