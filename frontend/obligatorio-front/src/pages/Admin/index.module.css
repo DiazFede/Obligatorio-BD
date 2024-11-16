@@ -8,6 +8,16 @@
     transform: scale(1.05);
 }
 
+.homeContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: auto;
+    margin-top: 18px;
+    margin-left: 8px;
+}
+
+
 .title {
     font-size: 30px;
     margin-top: 10px;
@@ -31,4 +41,14 @@
 
 .button:hover {
     transform: scale(1.025);
+}
+
+.homeButton {
+    background: none;
+    border: none;
+    transition: transform 0.3s;
+}
+
+.homeButton:hover {
+    transform: scale(1.2);
 }

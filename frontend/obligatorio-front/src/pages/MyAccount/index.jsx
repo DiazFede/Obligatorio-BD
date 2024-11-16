@@ -22,7 +22,7 @@ const MyAccount = () => {
           <h2>Mis Datos</h2>
           <p><strong>Nombre:</strong> {user.nombre}</p>
           <p><strong>Apellido:</strong> {user.apellido}</p>
-          <p><strong>Email:</strong> {user.email}</p>
+          <p><strong>Email:</strong> {user.correo_electronico}</p>
           <p><strong>Fecha de Nacimiento:</strong> {user.fecha_nacimiento}</p>
         </div>
       ) : (

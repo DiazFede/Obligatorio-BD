@@ -6,7 +6,7 @@ import styles from './index.module.css';
 
 const AdminAlumnos = () => {
     const [alumnos, setAlumnos] = useState([]);
-    const [form, setForm] = useState({ nombre: "", apellido: "", ci: "", fecha_nacimiento: "", email: "" });
+    const [form, setForm] = useState({ nombre: "", apellido: "", ci: "", fecha_nacimiento: "", correo_electronico: "" });
     const [isEditing, setIsEditing] = useState(false);
     const [selectedAlumno, setSelectedAlumno] = useState(null);
 
@@ -33,7 +33,7 @@ const AdminAlumnos = () => {
         if (isEditing) {
             await updateAlumno(selectedAlumno.ci, form);
             loadAlumnos();
-            setForm({ nombre: "", apellido: "", ci: "", fecha_nacimiento: "", email: "" });
+            setForm({ nombre: "", apellido: "", ci: "", fecha_nacimiento: "", correo_electronico: "" });
             setIsEditing(false);
             setSelectedAlumno(null);
         }
@@ -42,7 +42,7 @@ const AdminAlumnos = () => {
     const handleEdit = (alumno) => {
         setForm({
             ...alumno,
-            fecha_nacimiento: new Date(alumno.fecha_nacimiento).toISOString().split("T")[0], // Formato YYYY-MM-DD
+            fecha_nacimiento: new Date(alumno.fecha_nacimiento).toISOString().split("T")[0],
         });
         setIsEditing(true);
         setSelectedAlumno(alumno);
@@ -65,7 +65,7 @@ const AdminAlumnos = () => {
                             <>
                                 <p>Cédula: {alumno.ci}</p>
                                 <p>Fecha de Nacimiento: {alumno.fecha_nacimiento}</p>
-                                <p>Email: {alumno.email}</p>
+                                <p>Email: {alumno.correo_electronico}</p>
                                 <button onClick={() => handleEdit(alumno)} className={styles.editButton}>Editar</button>
                                 <button onClick={() => handleDelete(alumno.ci)} className={styles.deleteButton}>Eliminar</button>
                             </>
@@ -107,8 +107,8 @@ const AdminAlumnos = () => {
                     <input
                         className={styles.input}
                         type="email"
-                        name="email"
-                        value={form.email}
+                        name="correo_electronico"
+                        value={form.correo_electronico}
                         onChange={handleInputChange}
                         placeholder="Email"
                         required

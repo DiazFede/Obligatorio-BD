@@ -2,7 +2,7 @@ import React from "react";
 import styles from './index.module.css';
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faUserGraduate } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faUserGraduate, faHome } from '@fortawesome/free-solid-svg-icons';
 
 const Admin = () => {
 
@@ -16,8 +16,17 @@ const Admin = () => {
         navigate('/admininstructores')
     }
 
+    const handleHomeClick = () => {
+        navigate('/')
+    }
+
     return (
         <>
+            <div className={styles.homeContainer}>
+                <button onClick={handleHomeClick} className={styles.homeButton}>
+                    <FontAwesomeIcon icon={faHome} style={{ color: 'white' }} />
+                </button>
+            </div>
             <div className={styles.generalContainer}>
                 <h2 className={styles.title}>¿Qué desea administrar?</h2>
                 <div className={styles.buttonsContainer}>
