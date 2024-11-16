@@ -8,7 +8,7 @@ const HeaderAdmin = () => {
     const navigate = useNavigate();
 
     const handleHomeClick = () => {
-        navigate('/home');
+        navigate('/');
     };
 
     return (

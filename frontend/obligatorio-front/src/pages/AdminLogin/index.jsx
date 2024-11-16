@@ -1,14 +1,13 @@
-import React, {useState} from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { loginUser } from "../../apiservices/api";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { loginAdmin } from "../../apiservices/api";
 import styles from './index.module.css';
 import HeaderAdminLogin from "../../components/HeaderAdminLogin";
 
 const AdminLogin = () => {
-
     const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [correo, setCorreo] = useState("");
+    const [contrasena, setContrasena] = useState("");
     const [error, setError] = useState("");
 
     const handleSubmit = async (e) => {
@@ -16,12 +15,12 @@ const AdminLogin = () => {
         setError("");
 
         try {
-            const response = await loginUser(email, password);
-            console.log("Login successful:", response);
+            const response = await loginAdmin(correo, contrasena);
+            console.log("Admin login successful:", response);
 
             navigate("/admin");
         } catch (error) {
-            console.error("Login failed:", error);
+            console.error("Admin login failed:", error);
             setError("Error de inicio de sesión. Por favor verifica tus credenciales.");
         }
     };
@@ -30,21 +29,21 @@ const AdminLogin = () => {
         <>
             <HeaderAdminLogin />
             <div className={styles.loginForm}>
-                <h2>Iniciar sesión</h2>
+                <h2>Iniciar sesión como administrador</h2>
                 <form onSubmit={handleSubmit} className={styles.form}>
-                    <label className={styles.label}>Email:</label>
+                    <label className={styles.label}>Correo:</label>
                     <input
                         type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={correo}
+                        onChange={(e) => setCorreo(e.target.value)}
                         className={styles.input}
                         required
                     />
                     <label className={styles.label}>Contraseña:</label>
                     <input
                         type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={contrasena}
+                        onChange={(e) => setContrasena(e.target.value)}
                         className={styles.input}
                         required
                     />
@@ -54,6 +53,6 @@ const AdminLogin = () => {
             </div>
         </>
     );
-}
+};
 
 export default AdminLogin;
