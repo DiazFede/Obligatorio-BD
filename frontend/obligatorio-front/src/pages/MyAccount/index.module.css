@@ -1,22 +1,42 @@
 .accountContainer {
-    padding: 20px;
-    text-align: center;
-    color: white;
-  }
-  
-  .accountDetails {
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    border-radius: 8px;
-    display: inline-block;
-    margin-top: 20px;
-  }
-  
-  .accountDetails p {
-    font-size: 18px;
-    margin: 10px 0;
-  }
-  
-  .accountDetails strong {
-    font-weight: bold;
-  }  
+  padding: 20px;
+  text-align: center;
+  color: white;
+  transition: transform 0.35s;
+}
+
+.accountContainer:hover {
+  transform: scale(1.05);
+}
+
+.accountDetails {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.accountDetails p {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.accountDetails strong {
+  font-weight: bold;
+}
+
+.backButton {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  transition: transform 0.25s;
+}
+
+.backButton:hover {
+  transform: scale(1.1);
+}
