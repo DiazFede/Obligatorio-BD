@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from "react-router-dom";
 
-
 const Header = ({ openModal }) => {
   const navigate = useNavigate();
   return (
