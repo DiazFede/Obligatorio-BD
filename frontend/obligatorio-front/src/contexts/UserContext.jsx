@@ -1,9 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Crear el contexto de usuario
 const UserContext = createContext();
 
-// Proveedor del contexto de usuario
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 

@@ -21,7 +21,6 @@ const Login = () => {
       const response = await loginUser(email, password);
       console.log("Login successful:", response);
 
-      // Guardar los datos del usuario en UserContext
       updateUser(response);
 
       navigate("/home");

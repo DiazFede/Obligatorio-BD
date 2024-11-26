@@ -23,7 +23,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    // Cargar instructores al montar el componente
     const fetchInstructores = async () => {
       try {
         const data = await getInstructores();
@@ -56,7 +55,6 @@ const Home = () => {
     <>
       <Header openModal={openModal} />
       <div className={styles.mainContent}>
-        {/* Tarjetas de deportes */}
         <div className={styles.cardContainer}>
           <CardHome title="Snowboard" content="Disfruta de la adrenalina en la nieve aprendiendo Snowboard en nuestras clases especializadas." />
           <CardHome title="Ski" content="Domina las pistas con nuestras clases de Ski para todos los niveles de experiencia." />

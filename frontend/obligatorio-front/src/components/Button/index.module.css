@@ -1,15 +1,13 @@
-/* Button styles */
-
 .button {
-    background-color: whitesmoke; /* Color de fondo */
-    font-size: 20px; /* Tamaño de fuente */
-    color: #333; /* Color de fuente */ 
-    transition: transform 0.35s; /* Hace mas suave la transición */
-    margin: 10px; /* Margen del botón */
+    background-color: whitesmoke;
+    font-size: 20px;
+    color: #333;
+    transition: transform 0.35s;
+    margin: 10px;
 }
 
 .button:hover {
-    background-color: rgb(184, 184, 184); /* Color mas oscuro */
-    transform: scale(1.05); /* Cambia el tamaño al pasar el mouse */
+    background-color: rgb(184, 184, 184);
+    transform: scale(1.05);
     border-color: #585858;
 }

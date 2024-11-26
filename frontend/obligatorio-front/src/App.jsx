@@ -18,15 +18,15 @@ function App() {
       <UserProvider>
         <Router>
           <Routes>
-            <Route path="/" element={<Login />} /> {/* Ruta a Login */}
-            <Route path="/home" element={<Home />} /> {/* Ruta a Home */}
-            <Route path="/help" element={<Help />} /> {/* Ruta a Help */}
-            <Route path="register" element={<Register />} /> {/* Ruta a Register */}
-            <Route path="/myaccount" element={<MyAccount />} /> {/* Ruta a MyAccount */}
-            <Route path="/admin" element={<Admin />} /> {/* Ruta a Admin */}
-            <Route path="/adminlogin" element={<AdminLogin />} /> {/* Ruta a AdminLogin */}
-            <Route path="/admininstructores" element={<AdminInstructores />} /> {/* Ruta a AdminInstructores */}
-            <Route path="/adminalumnos" element={<AdminAlumnos />} /> {/* Ruta a AdminAlumnos */}
+            <Route path="/" element={<Login />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/help" element={<Help />} />
+            <Route path="register" element={<Register />} />
+            <Route path="/myaccount" element={<MyAccount />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/adminlogin" element={<AdminLogin />} />
+            <Route path="/admininstructores" element={<AdminInstructores />} />
+            <Route path="/adminalumnos" element={<AdminAlumnos />} />
           </Routes>
         </Router>
       </UserProvider>

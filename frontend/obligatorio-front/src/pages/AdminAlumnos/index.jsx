@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { getAlumnos, updateAlumno, deleteAlumno } from "../../apiservices/api";
 import HeaderAdminAlumnos from "../../components/HeaderAdminAlumnos";
-import SearchBar from "../../components/SearchBar"; // Importa la barra de búsqueda
+import SearchBar from "../../components/SearchBar";
 import CardAdmin from "../../components/CardAdmin";
 import styles from './index.module.css';
 
 const AdminAlumnos = () => {
     const [alumnos, setAlumnos] = useState([]);
-    const [filteredAlumnos, setFilteredAlumnos] = useState([]); // Estado para los alumnos filtrados
-    const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
+    const [filteredAlumnos, setFilteredAlumnos] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
     const [form, setForm] = useState({ nombre: "", apellido: "", ci: "", fecha_nacimiento: "", correo_electronico: "" });
     const [isEditing, setIsEditing] = useState(false);
     const [selectedAlumno, setSelectedAlumno] = useState(null);
@@ -21,7 +21,7 @@ const AdminAlumnos = () => {
         try {
             const data = await getAlumnos();
             setAlumnos(data);
-            setFilteredAlumnos(data); // Inicialmente todos los alumnos son visibles
+            setFilteredAlumnos(data);
         } catch (error) {
             console.error("Error al obtener alumnos:", error);
         }
@@ -70,7 +70,7 @@ const AdminAlumnos = () => {
     return (
         <>
             <HeaderAdminAlumnos />
-            <SearchBar searchTerm={searchTerm} onSearchChange={handleSearchChange} /> {/* Agrega la barra de búsqueda */}
+            <SearchBar searchTerm={searchTerm} onSearchChange={handleSearchChange} />
             <div className={styles.cardContainer}>
                 {filteredAlumnos.map((alumno) => (
                     <CardAdmin

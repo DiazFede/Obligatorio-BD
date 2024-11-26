@@ -17,26 +17,22 @@ def get_db_connection():
         password=app.config['MYSQL_PASSWORD']
     )
 
-# Registro
 @app.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
     ci = data.get('ci')
     nombre = data.get('nombre')
     apellido = data.get('apellido')
-    fecha_nacimiento_str = data.get('fecha_nacimiento')  # String date as sent in the request
+    fecha_nacimiento_str = data.get('fecha_nacimiento')
     telefono = data.get('telefono')
     correo = data.get('correo')
     contrasena = data.get('contrasena')
 
-    # Validar que todos los campos estén presentes
     if not all([ci, nombre, apellido, fecha_nacimiento_str, correo, contrasena]):
         return jsonify({"message": "Todos los campos son obligatorios"}), 400
 
-    # Convertir la fecha al formato 'YYYY-MM-DD'
     try:
         fecha_nacimiento = datetime.strptime(fecha_nacimiento_str, '%d-%m-%Y').strftime('%Y-%m-%d')
-        # Verificar el valor convertido de fecha
         print("Fecha de nacimiento convertida:", fecha_nacimiento)
     except ValueError:
         return jsonify({"message": "Formato de fecha inválido, use DD-MM-YYYY"}), 400
@@ -59,7 +55,6 @@ def register():
         cursor.close()
         conn.close()
 
-# Login
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -86,7 +81,6 @@ def login():
         cursor.close()
         conn.close()
 
-# CRUD para actividades
 @app.route('/actividades', methods=['GET', 'POST'])
 def actividades():
     conn = get_db_connection()
@@ -101,7 +95,6 @@ def actividades():
     
     elif request.method == 'POST':
         data = request.get_json()
-        # Asegúrate de que 'descripcion', 'costo' y 'restriccion_edad' están presentes
 
         if 'descripcion' not in data or 'costo' not in data or 'restriccion_edad' not in data:
             return jsonify({"message": "Faltan parámetros requeridos"}), 400
@@ -122,7 +115,6 @@ def actividad_by_id(id):
 
     if request.method == 'PUT':
         data = request.get_json()
-        # Asegúrate de que 'descripcion', 'costo' y 'restriccion_edad' están presentes
         if 'descripcion' not in data or 'costo' not in data or 'restriccion_edad' not in data:
             return jsonify({"message": "Faltan parámetros requeridos"}), 400
         
@@ -142,8 +134,6 @@ def actividad_by_id(id):
         conn.close()
         return jsonify({"message": "Actividad eliminada exitosamente."})
 
-
-# CRUD para equipamiento
 @app.route('/equipamiento', methods=['GET', 'POST'])
 def equipamiento():
     conn = get_db_connection()
@@ -215,7 +205,6 @@ def instructor_by_ci(ci):
     if request.method == 'PUT':
         data = request.get_json()
         
-        # Actualizar nombre, apellido, disponibilidad y experiencia
         cursor.execute(
             """
             UPDATE instructores 
@@ -231,15 +220,12 @@ def instructor_by_ci(ci):
         return jsonify({"message": "Instructor actualizado exitosamente."})
 
     elif request.method == 'DELETE':
-        # Eliminar el instructor por CI
         cursor.execute("DELETE FROM instructores WHERE ci = %s", (ci,))
         conn.commit()
         cursor.close()
         conn.close()
         return jsonify({"message": "Instructor eliminado exitosamente."})
 
-
-# CRUD para turnos
 @app.route('/turnos', methods=['GET', 'POST'])
 def turnos():
     conn = get_db_connection()
@@ -249,7 +235,6 @@ def turnos():
         cursor.execute("SELECT * FROM turnos")
         turnos = cursor.fetchall()
         
-        # Convertir tiempos a un formato JSON serializable
         for turno in turnos:
             if isinstance(turno['hora_inicio'], timedelta):
                 turno['hora_inicio'] = str(turno['hora_inicio'])  # o  usar .total_seconds()
@@ -288,7 +273,6 @@ def turno_by_id(id):
         conn.close()
         return jsonify({"message": "Turno eliminado exitosamente."})
 
-# CRUD para clases
 @app.route('/clase', methods=['GET', 'POST'])
 def clases():
     conn = get_db_connection()
@@ -335,7 +319,6 @@ def clase_by_id(id):
         conn.close()
         return jsonify({"message": "Clase eliminada exitosamente."})
 
-# CRUD para alumnos
 @app.route('/alumnos', methods=['GET', 'POST'])
 def alumnos():
     conn = get_db_connection()
@@ -382,7 +365,6 @@ def alumno_by_id(ci):
         conn.close()
         return jsonify({"message": "Alumno eliminado exitosamente."})
     
-# Obtener alumno por CI
 @app.route('/alumno/<int:ci>', methods=['GET'])
 def get_alumno_by_ci(ci):
     conn = get_db_connection()
@@ -402,8 +384,6 @@ def get_alumno_by_ci(ci):
         cursor.close()
         conn.close()
 
-
-# CRUD para la relación alumno_clase
 @app.route('/alumno_clase', methods=['GET', 'POST'])
 def alumno_clase():
     conn = get_db_connection()
@@ -485,7 +465,6 @@ def verify_class_availability():
     cursor = conn.cursor(dictionary=True)
 
     try:
-        # Verificar que el instructor no tenga otra clase en el mismo turno
         cursor.execute("""
             SELECT * FROM clase 
             WHERE ci_instructor = %s AND id_turno = %s
@@ -493,7 +472,6 @@ def verify_class_availability():
         if cursor.fetchone():
             return jsonify({"message": "El instructor ya tiene una clase en este turno"}), 400
 
-        # Verificar que el alumno no esté en otra clase en el mismo turno
         cursor.execute("""
             SELECT * FROM alumno_clase ac
             JOIN clase c ON ac.id_clase = c.id
@@ -521,8 +499,6 @@ def reportar_ingresos_actividades():
     cursor.close()
     conn.close()
     return jsonify(reportes)
-
-
 
 @app.route('/reportes/turnos_con_mas_clases', methods=['GET'])
 def reportar_turnos_mas_clases():
@@ -584,8 +560,7 @@ def release_equipment_from_alumno():
     finally:
         cursor.close()
         conn.close()
-
-        
+      
 @app.route('/adminlogin', methods=['POST'])
 def admin_login():
     data = request.get_json()
@@ -599,11 +574,9 @@ def admin_login():
     cursor = conn.cursor(dictionary=True)
 
     try:
-        # Obtén el registro de admin por correo
         cursor.execute("SELECT * FROM admin WHERE correo = %s", (correo,))
         admin = cursor.fetchone()
 
-        # Compara la contraseña en texto plano en lugar de usar un hash
         if admin and admin['contraseña'] == contrasena:
             return jsonify({"message": "Inicio de sesión de admin exitoso."})
         else:

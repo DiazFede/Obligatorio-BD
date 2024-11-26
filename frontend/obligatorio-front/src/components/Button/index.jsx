@@ -1,5 +1,3 @@
-{/* Componente que devuelve un botón con el texto pasado por parámetro (children) */}
-
 import React from 'react';
 import Styles from './index.module.css'
 
